@@ -14,6 +14,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 public class Porudzbina {
@@ -45,4 +49,87 @@ public class Porudzbina {
         cascade = CascadeType.ALL
     )
     private List<StavkaPorudzbine> stavke;
+    
+    public Porudzbina() {
+    	
+    }
+
+	public Porudzbina(Long id, LocalDateTime datumPorudzbine, StatusPorudzbine status, double ukupnaCena,
+			Korisnik kupac, Korisnik prodavac, List<StavkaPorudzbine> stavke) {
+		super();
+		this.id = id;
+		this.datumPorudzbine = datumPorudzbine;
+		this.status = status;
+		this.ukupnaCena = ukupnaCena;
+		this.kupac = kupac;
+		this.prodavac = prodavac;
+		this.stavke = stavke;
+	}
+
+	public Porudzbina(LocalDateTime datumPorudzbine, StatusPorudzbine status, double ukupnaCena, Korisnik kupac,
+			Korisnik prodavac, List<StavkaPorudzbine> stavke) {
+		super();
+		this.datumPorudzbine = datumPorudzbine;
+		this.status = status;
+		this.ukupnaCena = ukupnaCena;
+		this.kupac = kupac;
+		this.prodavac = prodavac;
+		this.stavke = stavke;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public LocalDateTime getDatumPorudzbine() {
+		return datumPorudzbine;
+	}
+
+	public void setDatumPorudzbine(LocalDateTime datumPorudzbine) {
+		this.datumPorudzbine = datumPorudzbine;
+	}
+
+	public StatusPorudzbine getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusPorudzbine status) {
+		this.status = status;
+	}
+
+	public double getUkupnaCena() {
+		return ukupnaCena;
+	}
+
+	public void setUkupnaCena(double ukupnaCena) {
+		this.ukupnaCena = ukupnaCena;
+	}
+
+	public Korisnik getKupac() {
+		return kupac;
+	}
+
+	public void setKupac(Korisnik kupac) {
+		this.kupac = kupac;
+	}
+
+	public Korisnik getProdavac() {
+		return prodavac;
+	}
+
+	public void setProdavac(Korisnik prodavac) {
+		this.prodavac = prodavac;
+	}
+
+	public List<StavkaPorudzbine> getStavke() {
+		return stavke;
+	}
+
+	public void setStavke(List<StavkaPorudzbine> stavke) {
+		this.stavke = stavke;
+	}
 }
