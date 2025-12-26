@@ -1,8 +1,11 @@
 package com.vts.prodavnicaobuce.service;
 
+import java.util.List;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.vts.prodavnicaobuce.dto.KorisnikDTO;
 import com.vts.prodavnicaobuce.dto.RegisterRequest;
 import com.vts.prodavnicaobuce.model.Korisnik;
 import com.vts.prodavnicaobuce.model.UlogaKorisnika;
@@ -51,5 +54,21 @@ public class KorisnikService {
     public Korisnik findByUsername(String username) {
         return korisnikRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Korisnik ne postoji"));
+    }
+    
+    public List<KorisnikDTO> getAdminiIProdavci() {
+        return korisnikRepository
+                .findByUlogaKorisnikaIn(List.of(UlogaKorisnika.PRODAVAC, UlogaKorisnika.KUPAC))
+                .stream()
+                .map(KorisnikDTO::fromEntity)
+                .toList();
+    }
+
+    public void blokirajKorisnika(Long id) {
+        Korisnik korisnik = korisnikRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Korisnik ne postoji"));
+
+        korisnik.setBlokiran(true);
+        korisnikRepository.save(korisnik);
     }
 }

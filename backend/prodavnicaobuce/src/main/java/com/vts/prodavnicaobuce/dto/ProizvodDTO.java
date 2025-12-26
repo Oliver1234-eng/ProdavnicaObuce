@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotNull;
 
 public class ProizvodDTO {
 
+	private Long id;
+	
 	@NotBlank(message = "Naziv proizvoda je obavezan")
     private String naziv;
 
@@ -31,12 +33,35 @@ public class ProizvodDTO {
     }
 
     public ProizvodDTO(Proizvod proizvod) {
+    	this.id = proizvod.getId();
         this.naziv = proizvod.getNaziv();
         this.cena = proizvod.getCena();
         this.velicina = proizvod.getVelicina();
         this.kolicinaNaStanju = proizvod.getKolicinaNaStanju();
         this.kategorija = proizvod.getKategorija() != null ? proizvod.getKategorija().getNaziv() : null;
     }
+    
+    public static ProizvodDTO fromEntity(Proizvod proizvod) {
+        ProizvodDTO dto = new ProizvodDTO();
+        dto.setId(proizvod.getId());
+        dto.setNaziv(proizvod.getNaziv());
+        dto.setCena(proizvod.getCena());
+        dto.setVelicina(proizvod.getVelicina());
+        dto.setKolicinaNaStanju(proizvod.getKolicinaNaStanju());
+        dto.setKategorija(proizvod.getKategorija().getNaziv());
+        
+        return dto;
+    }
+    
+    
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getNaziv() {
 		return naziv;

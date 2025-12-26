@@ -1,5 +1,6 @@
 package com.vts.prodavnicaobuce.security;
 
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,6 +25,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         Korisnik korisnik = korisnikRepository.findByUsername(username)
                 .orElseThrow(() ->
                         new UsernameNotFoundException("Korisnik ne postoji"));
+
+        if (korisnik.isBlokiran()) {
+            throw new DisabledException("Korisnik je blokiran");
+        }
 
         return new CustomUserDetails(korisnik);
     }
