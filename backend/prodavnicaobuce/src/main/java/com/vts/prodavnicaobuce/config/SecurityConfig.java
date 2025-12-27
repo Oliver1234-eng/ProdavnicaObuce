@@ -35,10 +35,10 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**", "/proizvodi", "/proizvodi/pretraga").permitAll()
+                .requestMatchers("/auth/**", "/proizvodi", "/proizvodi/pretraga", "/korpa/korpa", "/korpa/dodaj", "/porudzbina/naruci/nereg/**").permitAll()
                 .requestMatchers("/proizvodi/add", "/proizvodi/izmena/**", "/proizvodi/obrisi/**", "/admin/**").hasRole("ADMIN")
-                .requestMatchers("/zaposleni/**").hasAnyRole("ZAPOSLENI", "ADMIN")
-                .requestMatchers("/kupac/**").hasRole("KUPAC")
+                .requestMatchers("/porudzbina/sve", "/porudzbina/*/poslata").hasRole("PRODAVAC")
+                .requestMatchers("/kupac/**", "/korpa/kupac/dodaj", "/korpa/kupac/korpa", "/porudzbina/naruci/kupac/**", "/porudzbina/mojePorudzbine").hasRole("KUPAC")
                 .anyRequest().authenticated()
             )
             .userDetailsService(customUserDetailsService)

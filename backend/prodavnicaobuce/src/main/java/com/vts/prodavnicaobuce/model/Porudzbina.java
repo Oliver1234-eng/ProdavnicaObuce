@@ -37,12 +37,27 @@ public class Porudzbina {
     private double ukupnaCena;
 
     @ManyToOne
-    @JoinColumn(name = "kupac_id", nullable = false)
+    @JoinColumn(name = "kupac_id")
     private Korisnik kupac;
 
     @ManyToOne
     @JoinColumn(name = "prodavac_id")
     private Korisnik prodavac;
+    
+    @Column
+    private String neregIme;
+
+    @Column
+    private String neregPrezime;
+
+    @Column
+    private String neregAdresa;
+    
+    @Column
+    private String neregEmail;
+    
+    @Column
+    private String neregTelefon;
 
     @OneToMany(
         mappedBy = "porudzbina",
@@ -55,7 +70,8 @@ public class Porudzbina {
     }
 
 	public Porudzbina(Long id, LocalDateTime datumPorudzbine, StatusPorudzbine status, double ukupnaCena,
-			Korisnik kupac, Korisnik prodavac, List<StavkaPorudzbine> stavke) {
+			Korisnik kupac, Korisnik prodavac, String neregIme, String neregPrezime, String neregAdresa,
+			String neregEmail, String neregTelefon, List<StavkaPorudzbine> stavke) {
 		super();
 		this.id = id;
 		this.datumPorudzbine = datumPorudzbine;
@@ -63,17 +79,28 @@ public class Porudzbina {
 		this.ukupnaCena = ukupnaCena;
 		this.kupac = kupac;
 		this.prodavac = prodavac;
+		this.neregIme = neregIme;
+		this.neregPrezime = neregPrezime;
+		this.neregAdresa = neregAdresa;
+		this.neregEmail = neregEmail;
+		this.neregTelefon = neregTelefon;
 		this.stavke = stavke;
 	}
 
 	public Porudzbina(LocalDateTime datumPorudzbine, StatusPorudzbine status, double ukupnaCena, Korisnik kupac,
-			Korisnik prodavac, List<StavkaPorudzbine> stavke) {
+			Korisnik prodavac, String neregIme, String neregPrezime, String neregAdresa, String neregEmail,
+			String neregTelefon, List<StavkaPorudzbine> stavke) {
 		super();
 		this.datumPorudzbine = datumPorudzbine;
 		this.status = status;
 		this.ukupnaCena = ukupnaCena;
 		this.kupac = kupac;
 		this.prodavac = prodavac;
+		this.neregIme = neregIme;
+		this.neregPrezime = neregPrezime;
+		this.neregAdresa = neregAdresa;
+		this.neregEmail = neregEmail;
+		this.neregTelefon = neregTelefon;
 		this.stavke = stavke;
 	}
 
@@ -123,6 +150,46 @@ public class Porudzbina {
 
 	public void setProdavac(Korisnik prodavac) {
 		this.prodavac = prodavac;
+	}
+
+	public String getNeregIme() {
+		return neregIme;
+	}
+
+	public void setNeregIme(String neregIme) {
+		this.neregIme = neregIme;
+	}
+
+	public String getNeregPrezime() {
+		return neregPrezime;
+	}
+
+	public void setNeregPrezime(String neregPrezime) {
+		this.neregPrezime = neregPrezime;
+	}
+
+	public String getNeregAdresa() {
+		return neregAdresa;
+	}
+
+	public void setNeregAdresa(String neregAdresa) {
+		this.neregAdresa = neregAdresa;
+	}
+
+	public String getNeregEmail() {
+		return neregEmail;
+	}
+
+	public void setNeregEmail(String neregEmail) {
+		this.neregEmail = neregEmail;
+	}
+
+	public String getNeregTelefon() {
+		return neregTelefon;
+	}
+
+	public void setNeregTelefon(String neregTelefon) {
+		this.neregTelefon = neregTelefon;
 	}
 
 	public List<StavkaPorudzbine> getStavke() {

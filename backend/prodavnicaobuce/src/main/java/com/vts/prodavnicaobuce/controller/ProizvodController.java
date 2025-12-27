@@ -43,6 +43,7 @@ public class ProizvodController {
                 .toList();
     }
     
+    // Endpoint za dodavanje novog proizvoda od strane administratora
     @PostMapping("/add")
     public ResponseEntity<?> dodajProizvod(@RequestBody @Valid ProizvodDTO request) {
 
@@ -62,6 +63,7 @@ public class ProizvodController {
         return ResponseEntity.ok("Proizvod uspešno dodat");
     }
     
+    // Endpoint za pretragu proizvoda po kriterijumima
     @GetMapping("/pretraga")
     public List<ProizvodDTO> pretraga(
             @RequestParam(required = false) String naziv,
@@ -75,6 +77,7 @@ public class ProizvodController {
                 .toList();
     }
     
+    // Endpoint za izmenu cene i/ili dodavanje dodatne kolicine proizvoda od strane administratora
     @PutMapping("/izmena/{id}")
     public ResponseEntity<String> izmeniCenuIKolicinu(
             @PathVariable Long id,
@@ -84,6 +87,7 @@ public class ProizvodController {
         return ResponseEntity.ok("Proizvod uspešno ažuriran");
     }
     
+    // Endpoint za brisanje proizvoda od strane administratora
     @DeleteMapping("obrisi/{id}")
     public ResponseEntity<String> obrisi(@PathVariable Long id) {
         proizvodService.obrisiProizvod(id);

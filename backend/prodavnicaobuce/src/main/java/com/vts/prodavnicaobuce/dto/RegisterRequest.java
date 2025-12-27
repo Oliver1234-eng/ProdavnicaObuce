@@ -36,9 +36,5 @@ public class RegisterRequest {
     public String adresa;
 
     @NotBlank(message = "Broj telefona je obavezan")
-    @Pattern(
-        regexp = "^\\+3816\\d{7,8}$",
-        message = "Broj telefona mora biti u formatu +3816XXXXXXX"
-    )
     public String brojTelefona;
 }

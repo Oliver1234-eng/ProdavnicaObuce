@@ -32,6 +32,10 @@ public class StavkaKorpe {
     @ManyToOne
     @JoinColumn(name = "proizvod_id", nullable = false)
     private Proizvod proizvod;
+    
+    public StavkaKorpe() {
+    	
+    }
 
 	public StavkaKorpe(Long id, int kolicina, double cena, Korpa korpa, Proizvod proizvod) {
 		super();

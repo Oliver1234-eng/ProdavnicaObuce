@@ -40,12 +40,14 @@ public class AuthController {
 		this.customUserDetailsService = customUserDetailsService;
 	}
 
+    // Endpoint za registraciju korisnika
 	@PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody @Valid RegisterRequest request) {
         korisnikService.registerKupac(request);
         return ResponseEntity.ok("Kupac uspešno registrovan");
     }
 
+	// Endpoint za login korisnika
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
 	    try {

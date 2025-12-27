@@ -22,11 +22,13 @@ public class AdminController {
         this.korisnikService = korisnikService;
     }
 
+    // Endpoint za pregled svih korisnika od strane administratora
     @GetMapping("/korisnici")
     public List<KorisnikDTO> getAdminiIProdavci() {
         return korisnikService.getAdminiIProdavci();
     }
 
+    // Endpoint za blokiranje korisnika od strane administratora
     @PutMapping("korisnici/{id}/blokiraj")
     public ResponseEntity<?> blokiraj(@PathVariable Long id) {
         korisnikService.blokirajKorisnika(id);
