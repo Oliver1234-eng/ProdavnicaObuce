@@ -1,0 +1,621 @@
+{
+	"info": {
+		"_postman_id": "c06c1f9b-7f5b-40de-a2a7-a83a74c5196d",
+		"name": "ProdavnicaObuce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18105826"
+	},
+	"item": [
+		{
+			"name": "Registracija",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"ime\": \"Petar\",\r\n  \"prezime\": \"Petrovic\",\r\n  \"email\": \"petar@gmail.com\",\r\n  \"username\": \"pera\",\r\n  \"password\": \"Pera1234\",\r\n  \"adresa\": \"Bulevar Oslobodjenja 10\",\r\n  \"brojTelefona\": \"0611234567\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"Admin\",\r\n  \"password\": \"Admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Prikaz svih proizvoda",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/proizvodi",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"proizvodi"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pretraga proizvoda",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/proizvodi/pretraga?naziv=Patike&kategorija=Cipele&minCena=5000&maxCena=12000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"proizvodi",
+						"pretraga"
+					],
+					"query": [
+						{
+							"key": "naziv",
+							"value": "Patike"
+						},
+						{
+							"key": "kategorija",
+							"value": "Cipele"
+						},
+						{
+							"key": "minCena",
+							"value": "5000"
+						},
+						{
+							"key": "maxCena",
+							"value": "12000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Dodavanje proizvida - samo admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJBZG1pbiIsImlhdCI6MTc2Njg2MTM3MCwiZXhwIjoxNzY2ODY0OTcwfQ.mi3sAx8Az-NY1GYQ5QR_eCi8k5f3lWiOgegMWsLBbkJ-E_cFD76kfiV61tqDoApR",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"naziv\": \"Sportske patike crvene\",\r\n  \"cena\": 11999,\r\n  \"velicina\": 42,\r\n  \"kolicinaNaStanju\": 9,\r\n  \"kategorija\": \"Patike\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/proizvodi/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"proizvodi",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Izmena proizvoda - samo admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJBZG1pbiIsImlhdCI6MTc2Njg2MTcyNywiZXhwIjoxNzY2ODY1MzI3fQ.5yTOx-W7lc1wcsY2YSV-RW3P6HqTsvjnlfNeIoWVRwHT8naKhggP7Emvr1i0uEEZ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"cena\": 8990,\r\n  \"dodatnaKolicina\": 15\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/proizvodi/izmena/9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"proizvodi",
+						"izmena",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Brisanje proizvoda - samo admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJBZG1pbiIsImlhdCI6MTc2Njg2MTM3MCwiZXhwIjoxNzY2ODY0OTcwfQ.mi3sAx8Az-NY1GYQ5QR_eCi8k5f3lWiOgegMWsLBbkJ-E_cFD76kfiV61tqDoApR",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/proizvodi/obrisi/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"proizvodi",
+						"obrisi",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Prikaz svih korisnika - samo admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2Njc1MjE5MywiZXhwIjoxNzY2NzU1NzkzfQ.JR7fRiy2DNYXn3DcPG3xth7ip3SlGmXjB7PC8w3hSUxZTrL-Zf_Xqyqy1q5eo6wZ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/admin/korisnici",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"korisnici"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Dodavanje u korpu - nereg. korisnik",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-SESSION-ID",
+						"value": "test-session-123",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/korpa/dodaj?proizvodId=1&kolicina=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"korpa",
+						"dodaj"
+					],
+					"query": [
+						{
+							"key": "proizvodId",
+							"value": "1"
+						},
+						{
+							"key": "kolicina",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pregled korpe - nereg. korisnik",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-SESSION-ID",
+						"value": "test-session-123",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/korpa/korpa",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"korpa",
+						"korpa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Dodavanje u korpu - reg. korisnik",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJwZXJhIiwiaWF0IjoxNzY2ODYwMjIxLCJleHAiOjE3NjY4NjM4MjF9.8QNzVQ0TaE5eyiOvxuZjtZ7iIGi3U2jJflnVsgQCYrO8KDjJqyhuK4AXB4CBcMn2",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"proizvodId\": 2,\r\n    \"kolicina\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/korpa/kupac/dodaj",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"korpa",
+						"kupac",
+						"dodaj"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pregled korpe - reg. korisnik",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJwZXJhIiwiaWF0IjoxNzY2ODYwMzQ3LCJleHAiOjE3NjY4NjM5NDd9.trtlYkbVAgRF1r14bDsLV1X6IRfec2W9qtxDVsi7k7gLX8cggOLUE5WAU2DA6AcE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/korpa/kupac/korpa",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"korpa",
+						"kupac",
+						"korpa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Narucivanje proizvoda - nereg. korisnik",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"neregIme\": \"Dusan\",\r\n    \"neregPrezime\": \"Dusanovic\",\r\n    \"neregAdresa\": \"Bulevar oslobodjenja 200, Novi Sad\",\r\n    \"neregEmail\": \"dusan@gmail.com\",\r\n    \"neregTelefon\": \"0635461821\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/porudzbina/naruci/nereg?sessionId=test-session-123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"porudzbina",
+						"naruci",
+						"nereg"
+					],
+					"query": [
+						{
+							"key": "sessionId",
+							"value": "test-session-123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Narucivanje proizvoda - reg. korisnik",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJwZXJhIiwiaWF0IjoxNzY2ODYwODQ5LCJleHAiOjE3NjY4NjQ0NDl9.OoerqvlsrFpKUbFjtTSjmp5GcBgnQwOCPeyqHVEi1j_GgPu5cVWaMyPgAow2IUNy",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/porudzbina/naruci/kupac",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"porudzbina",
+						"naruci",
+						"kupac"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pregled svih svojih porudzbina - reg. korisnik",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJwZXJhIiwiaWF0IjoxNzY2ODYxOTQ5LCJleHAiOjE3NjY4NjU1NDl9.Qy4GwEFWbnWZgqlTRZCFRJuW_zvhUgL6Z2n0EMMQWuYdAFWUbJBZ_9OGvJ7Dxzte",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/porudzbina/mojePorudzbine",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"porudzbina",
+						"mojePorudzbine"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pregled svih pristiglih porudzbina - prodavac",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJQcm9kYXZhYzEiLCJpYXQiOjE3NjY4NjIwMTUsImV4cCI6MTc2Njg2NTYxNX0._M7YKrbXGNyOvEohFtLU2e-peYYfiCnv2qR6EyzMRRsGrVeBKpCZIMlethXzNIbb",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/porudzbina/sve",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"porudzbina",
+						"sve"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Blokiranje korisnika - samo admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJBZG1pbiIsImlhdCI6MTc2Njg2NzY5MCwiZXhwIjoxNzY2ODcxMjkwfQ.HMeg2J0PongG7DrpHwFuZtg2b41mowZbvR_4MqdZGHMCBCsHBdRuHWuC9gCmCC_I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/korisnici/4/blokiraj",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"korisnici",
+						"4",
+						"blokiraj"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

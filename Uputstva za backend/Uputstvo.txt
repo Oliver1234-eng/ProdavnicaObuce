@@ -1,0 +1,64 @@
+Prvo treba instalirati, ko nema, JDK za Javu (ja imam verziju 21) i Eclipse IDE for Enterprise Java and Web Developers (ja imam verziju 2025-09). Kada se projekat povuce sa GitHub repozitorijuma pokrene se Eclipse (eclipse_workspace) pa ide se gore levo na File-->Import-->Maven-->Existing maven project, onda za Root Directory ide se na Browse i pronadje se Java projekat skinut sa Githuba, sa tim da poslednji deo lokacije bude "/backend" jer ce onda prepoznati i stiklirati pom.xml i onda Finish. Posle treba neko vreme na Maven prepozna i ucita projekat. Treba onda skinuti MySQL bazu, ko nema, (ja imam verziju 8.0.44) i u toku instalacije ako pita za lozinku MySQL servera treba napisati "root". To ce kasnije biti vazno. Kad se pokrene MySQL onda se ide na lokalnu instancu localhost:3306, pa ukucati lozinku "root" i otvorice se. Gore levo se ide na sliku za nov SQL Query i onda ukuca se "create database prodavnica_obuce". Tabele ne kreiramo to ce Spring Boot preko JPA anotacija sam da kreira. Sad se vracamo na nas projekat, u src/main/resources ima fajl application.properties koji ovako izgleda:
+
+spring.application.name=prodavnicaobuce
+
+#spring.jpa.hibernate.ddl-auto=update
+spring.jpa.hibernate.ddl-auto=validate
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+logging.level.org.springframework.security=DEBUG
+
+spring.datasource.url=jdbc:mysql://localhost:3306/prodavnica_obuce
+spring.datasource.username=root
+spring.datasource.password=root
+
+Ova poslednja linija (spring.datasource.password=root) ostaje ovako ako ste prilikom instalacije MySQL-a za lozinku stavili "root", ako niste to se menja sa vasom lozinkom koju ste postavili. A najvaznije je sledece: PRE NEGO STO PRVI PUT POKRENETE PROJEKAT OVO TREBA DA JE OTKOMENTARISANO spring.jpa.hibernate.ddl-auto=update A ONO DRUGO ZAKOMENTARISANO spring.jpa.hibernate.ddl-auto=validate ZNACI OBRNUTO OD OVOG KAKO JE SADA. Sada pokrenuti projekat, sacekati u konzoli da pokrene projekat i kreira tabele i ako je sve u redu odmah prekinite izvrsavanje projekta. Vracate se na application.properties i zakomentarisete ovo spring.jpa.hibernate.ddl-auto=update a otkomentarisete ovo spring.jpa.hibernate.ddl-auto=validate (za komentarisanje stavi se ispred linije #) i posle svaki sledeci put kad pokrenete projekat ovo se ne dira vise. Ako slucajno hocete da obrisete bazu i opet kreirate u MySQL-u se kuca komanda "drop database prodavnica_obuce" pa "create database prodavnica_obuce" i onda ovaj postupak za application.properties se ponovi da bi opet kreiralo tabele.
+
+Evo vam neki insert podaci koje se ne dodaju preko projekta nego preko MySQL-a (prvo pisete u SQL Query fajlu "use prodavnica_obuce" pa samo copy-paste ovaj sledeci kod pa selektujete misem kod i onda zuta munjica gore da se izvrsi komanda):
+
+INSERT INTO kategorija (naziv) VALUES ('Cipele');
+INSERT INTO kategorija (naziv) VALUES ('Patike');
+INSERT INTO kategorija (naziv) VALUES ('Sandale');
+INSERT INTO kategorija (naziv) VALUES ('Čizme');
+INSERT INTO kategorija (naziv) VALUES ('Papuče');
+
+INSERT INTO proizvod (naziv, cena, velicina, kolicina_na_stanju, obrisan, kategorija_id)
+VALUES 
+('Klasične crne cipele', 6999, 42, 10, false, 1),
+('Elegantne braon cipele', 8499, 43, 5, false, 1),
+('Zimske čizme crne', 12999, 44, 7, false, 2),
+('Kožne čizme braon', 14999, 42, 3, false, 2),
+('Kućne papuče plave', 1299, 41, 20, false, 3),
+('Papuce za bazen', 999, 42, 15, false, 3),
+('Letnje sandale žute', 2499, 40, 8, false, 4),
+('Sandale na platformu', 3299, 39, 6, false, 4),
+('Sportske patike bele', 8999, 43, 12, false, 5),
+('Trkačke patike crvene', 11999, 42, 9, false, 5);
+
+-- Admin
+INSERT INTO korisnici 
+(ime, prezime, email, username, password, adresa, broj_telefona, uloga_korisnika, blokiran)
+VALUES
+('Marko', 'Markovic', 'marko.admin@example.com', 'Admin', 
+ '$2a$12$lP9la70Vg0a.IocNqkuG.eUW4YW1UdVtuR1fk7C/4RNktMIDuPgx.',
+ 'Ulica 1, Beograd', '0611234567', 'ADMIN', false);
+
+-- Prodavac 1
+INSERT INTO korisnici 
+(ime, prezime, email, username, password, adresa, broj_telefona, uloga_korisnika, blokiran)
+VALUES
+('Jovana', 'Jovanovic', 'jovana.prodavac@example.com', 'Prodavac1', 
+ '$2a$10$hZkC7X6nBPLo/9LqK2D5CemjXv5RtQH6fUj4v6z7W8yRk6bJ1OaQG',
+ 'Ulica 2, Beograd', '0612345678', 'PRODAVAC', false);
+
+-- Prodavac 2
+INSERT INTO korisnici 
+(ime, prezime, email, username, password, adresa, broj_telefona, uloga_korisnika, blokiran)
+VALUES
+('Petar', 'Petrovic', 'petar.prodavac@example.com', 'Prodavac2', 
+ '$2a$10$5jF2D9fK3nR8X4gVhL1Y.e8tKwPvQ1z7kF9aYw1x4Z2bQ6cJ3GdBf',
+ 'Ulica 3, Beograd', '0613456789', 'PRODAVAC', false);
+
+Za korisnike svih uloga lozinke se cuvaju u enkriptovanom formatu, ali kad se korisnik loguje upisuje se lozinka u plain text formatu (za admina lozinka je "Admin", za prodavca1 je "Prodavac1" a za prodavca2 je "Prodavac2"). Jednog kupca mozete kroz Postman registrovati ali zapamtite mu lozinku jer se cuva u sifrovanom formatu, s tim da ima serverska validacija da su sva polja obavezna, a lozinka mora da ima minimum 8 karaktera ukljucujuci veliko slovo, malo slovo i broj.
+
+Instalirajte Postman, ko nema, ja sam uradio gotove zahteve sa postavljenim url-ovima, vrednostima i svime i postavio ovde, vi samo skinite to i importujte u Postman. Za frontend deo koji radimo u Angularu najbolje je raditi u Visual Studio Code, a pre koriscenja instalirati node.js.

@@ -1,0 +1,58 @@
+Postman zahtev se sastoji od HTTP metoda (GET, POST, PUT, DELETE), url-a, i od vise tabova ispod kao sto su Params, Auth, Headers, Body, Scripts, Settings. Nama su najvaznije sledece stvari:
+- u Params tabu se postavljaju Query parametri koji idu u zaglavlje url-a
+- u Auth tabu se radi autentifikacija. Kliknuti na Auth, pa Auth type Bearer token i u polje koje se onda pojavi treba nalepiti iskopiran token koji korisnik dobije kao odgovor nakon uspesnog logina
+- u Headers tabu se postavljaju Headers parametri (nama je ovo jedino vazno jer kad neregistrovani korisnik dodaje u kopru ili pregledava korpu onda u sesiji kao parametar (Key) X-SESSION-ID cuvamo njegovu sesiju, na frontendu treba da se random generise ali ovako kao backend test moze bilo sta da se unese kao vrednost (Value) samo ga treba zapamtiti
+- u Body tabu saljemo podatke na server (na primer kod registracije, logina ili dodavanja novog proizvoda). Kad kliknete na Body odmah birajte Raw pa onda JSON jer podatke saljemo kao JSON
+
+Poslao sam Postman kolekciju sa svih zahtevima koje imamo u sistemu. To su gotovi zahtevi, ali treba menjati neke stvari pa ide objasnjenje u nastavku:
+1. Registracija, POST zahtev, url: http://localhost:8080/auth/register
+- ne mora da se menja nista, u Body delu sam stavio JSON podatke za registraciju novog kupca tako da se samo klikne Send dugme. Vazno uradjena je serverska validacija pa sva ta polja koja sam stavio su obavezna, a lozinka mora da ima min 8 karaktera ukljucujuci veliko slovo, malo slovo i broj. Ako se ne zadovolje ovi zahtevi kao rezultat vratice 403 Forbidden
+
+2. Login, POST zahtev, url: http://localhost:8080/auth/login
+- u Body delu sam stavio atribute username i password koje treba uneti, na osnovu uloge korisnika koja se cuva u tabeli ce sistem odrediti sam koja je uloga korisnik koji se prijavio. Kao odgovor nakon uspesne prijave Postman salje nazad JWT token koji kopirajte jer kod nekih zahteva treba u Auth tab da se prekopira kao Bearer token zbog autentifikacije
+
+3. Prikaz svih proizvoda, GET zahtev, url: http://localhost:8080/proizvodi
+Svi ukljucjuci i neregistrovane korisnike mogu da pregledaju proizvode tako da tu se samo klikne na Send dugme nema nista dodatno.
+
+4. Pretraga korisnika, GET zahtev, url: http://localhost:8080/proizvodi/pretraga
+Svi ukljucjuci i neregistrovane korisnike mogu da pretrazuju proizvode, u Params delu kao Query params mozemo u Key-Value formatu da dodajemo atribute za pretragu, kao sto su naziv, kategorija, min cena i max cena (opseg izmedju min i max). Pretraga je pojedinacna ne zajednicka tako da odstiklirajte levo atribute po kojima necete pretragu (moze pretraga samo po nazivu, samo po kategoriji, samo po opsegu cene ne i zajedno)
+
+5. Dodavanje proizvoda - samo admin, POST zahtev, url: http://localhost:8080/proizvodi/add
+Ovo samo administrator moze da radi, tako da ulogujte se kao administrator, onaj token koji dobijete kopirajte i onda idete na Auth pa umesto No auth birajte Bearer token i nalepite desno. Posle toga u Body delu sam dodao u JSON-u atrbute novog proizvoda koji se moze dodati.
+
+6. Izmena proizvoda - samo admin, PUT zahtev, url: http://localhost:8080/proizvodi/izmena/{id}
+Ovo samo administrator moze da radi, tako da ulogujte se kao administrator, onaj token koji dobijete kopirajte i onda idete na Auth pa umesto No auth birajte Bearer token i nalepite desno. Posle toga u Body delu sam dodao u JSON-u atrbute za cenu i dodavanje dodatne kolicine proizvoda to se moze samo menjati. U url-u umesto {id} stavlja se id proizvoda koji se menja.
+
+7. Brisanje proizvoda - samo admin, DELETE zahtev, url: http://localhost:8080/proizvodi/obrisi/{id}
+Ovo samo administrator moze da radi, tako da ulogujte se kao administrator, onaj token koji dobijete kopirajte i onda idete na Auth pa umesto No auth birajte Bearer token i nalepite desno. U url-u se prosledi id proizvoda koji se brise. Napomena: brisanje nije fizicko nego logicko tj. atribut "obrisan" tog proizvoda se promeni sa false na true.
+
+8. Prikaz svih korisnika - samo admin, GET zahtev, url: http://localhost:8080/admin/korisnici
+Ovo samo administrator moze da radi, tako da ulogujte se kao administrator, onaj token koji dobijete kopirajte i onda idete na Auth pa umesto No auth birajte Bearer token i nalepite desno. Posle se samo klikne na Send dugme i prikazu se svi aktivni korisnici sa ulogama kupca i prodavca.
+
+9. Dodavanje u korpu - neregistrovani korisnik, POST zahtev, url: http://localhost:8080/korpa/dodaj
+U Params kao Query parametre kao Key-Value vrednosti prosledjujemo id proizvoda i kolicinu koja se dodaje (proizvodId i kolicina), a u Headers delu stavljamo sesiju korisnika X-SESSION-ID i njenu vrednost (value).
+
+10. Pregled korpe - neregistrovani korisnik, GET zahtev, url: http://localhost:8080/korpa/korpa (da dva puta je korpa jer sam morao da napravim razliku kad kupuje neregistrovani i registrovani korisnik, ovo je vazno kad se povezuje ovaj endpoint sa frontendom)
+U Headers delu stavljamo sesiju korisnika X-SESSION-ID i njenu vrednost (value) i dobijemo korpu korisnika sa tom sesijom.
+
+11. Dodavanje u korpu - registrovani korisnik, POST zahtev, url: http://localhost:8080/korpa/kupac/dodaj
+Prvo se ulogujemo kao kupac, kopiramo dobijeni JWT token, i onda u Auth delu kao Bearer token ga nalepimo. U Body delu kao JSON prosledjujemo atribute proizvodId i kolicina tj koji proizvod dodajemo u korpu i koliko komada.
+
+12. Pregled korpe - registrovani korisnik, GET zahtev, url: http://localhost:8080/korpa/kupac/korpa
+Prvo se ulogujemo kao kupac, kopiramo dobijeni JWT token, i onda u Auth delu kao Bearer token ga nalepimo. Posle kliknemo na Send dugme i dobijemo korpu tog kupca.
+
+13. Narucivanje proizvoda - neregistrovani korisnik, POST zahtev, url: http://localhost:8080/porudzbina/naruci/nereg
+U Params delu kao Query param prosledjujemo sessionId i njenu vrednost da bi sistem znao ciju porudzbinu kreiramo jer korisnik nema nalog, a u Body delu prosledjujemo kao JSON podatke o korisniku koje on mora da popuni dodatno jer Kazem nije registrovan nema ga u sistemu nego kao gost narucuje.
+
+
+14. Narucivanje proizvoda - registrovani korisnik, POST zahtev, url: http://localhost:8080/porudzbina/naruci/kupac
+Prvo se ulogujemo kao kupac, kopiramo dobijeni JWT token, i onda u Auth delu kao Bearer token ga nalepimo. Posle idemo na Send dugme i saljemo porudzbinu (kupac je registrovan pa ima njegovi licni podaci u bazi pa ne mora nista dodatno da popunjava)
+
+15. Pregled svih svojih porudzbina - registrovani korisnik, GET zahtev, url: http://localhost:8080/porudzbina/mojePorudzbine
+Prvo se ulogujemo kao kupac, kopiramo dobijeni JWT token, i onda u Auth delu kao Bearer token ga nalepimo. Posle idemo na Send dugme i dobijemo listu svih porudzbina tog kupca istorijski.
+
+16. Pregled svih pristiglih porudzbina - prodavac, GET zahtev, url: http://localhost:8080/porudzbina/sve
+Prvo se ulogujemo kao prodavac, kopiramo dobijeni JWT token, i onda u Auth delu kao Bearer token ga nalepimo. Posle idemo na Send dugme i dobijemo listu svih porudzbina u sistemu.
+
+17. Blokiranje korisnika - samo admin, PUT zahtev, url: http://localhost:8080/admin/korisnici/{id}/blokiraj
+Prvo se ulogujemo kao admin, kopiramo dobijeni JWT token, i onda u Auth delu kao Bearer token ga nalepimo. U url-u prosledjujemo id korisnika kog zelimo blokirati i idemo na Send dugme. Ako je uspesno onda korisnik ne moze da se prijavi na sistem. Napomena: korisnik i dalje ostaje u sistemu, samo mu je u bazi atribut "blokiran" promenjen sa false na true.
