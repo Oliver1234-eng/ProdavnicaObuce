@@ -1,0 +1,40 @@
+<div class="reg-page">
+  <div class="reg-box">
+    <div class="logo-section text-center">
+      <div class="logo-box">E</div>
+      <h2>ELEKTRASI OBUĆA</h2>
+      <p>Registracija novog naloga</p>
+    </div>
+
+    <form (ngSubmit)="onRegistracija()" class="reg-form">
+      <div class="form-group mb-2">
+        <select class="form-select-custom" [(ngModel)]="kupacData.uloga" name="uloga" required>
+          <option value="" disabled selected>Izaberite ulogu</option>
+          <option value="KUPAC">Kupac</option>
+          <option value="PRODAVAC">Prodavac</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <input type="text" [(ngModel)]="kupacData.ime" name="ime" placeholder="Ime" required>
+        <input type="text" [(ngModel)]="kupacData.prezime" name="prezime" placeholder="Prezime" required>
+      </div>
+      
+      <input type="email" [(ngModel)]="kupacData.email" name="email" placeholder="Email adresa" required>
+      <input type="text" [(ngModel)]="kupacData.adresa" name="adresa" placeholder="Adresa stanovanja" required>
+      <input type="text" [(ngModel)]="kupacData.brojTelefona" name="brojTelefona" placeholder="Broj telefona" required>
+      
+      <div class="form-row">
+        <input type="text" [(ngModel)]="kupacData.username" name="username" placeholder="Korisničko ime" required>
+        <input type="password" [(ngModel)]="kupacData.password" name="password" placeholder="Lozinka" required>
+      </div>
+
+      <button type="submit" class="btn-reg">KREIRAJ NALOG</button>
+      
+      <div class="footer-links">
+        <span>Već imate nalog? </span>
+        <a routerLink="/login">Prijavite se</a>
+      </div>
+    </form>
+  </div>
+</div>

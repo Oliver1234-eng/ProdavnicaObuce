@@ -1,0 +1,191 @@
+/* Celokupna pozadina stranice prati tamni stil prodavnice */
+.reg-page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1a1a1a; /* Tamna pozadina kao na login-u */
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+}
+
+/* Centralna kutija za formu */
+.reg-box {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 500px; /* Malo šira kutija zbog dva polja u redu */
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+}
+
+/* Narandžasti logo kvadrat */
+.logo-box {
+  background: #ff6600;
+  color: white;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 32px;
+  margin: 0 auto 20px;
+}
+
+h2 {
+  color: #1a1a1a;
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: 1px;
+}
+
+p {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+/* Stilovi za formu i inpute */
+.reg-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-row {
+  display: flex;
+  gap: 10px;
+}
+
+.form-row input {
+  flex: 1; /* Polja u istom redu dele prostor */
+}
+
+input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box; /* Sprečava širenje van kutije */
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #ff6600;
+  box-shadow: 0 0 5px rgba(255, 102, 0, 0.2);
+}
+
+/* Glavno narandžasto dugme */
+.btn-reg {
+  background: #ff6600;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s;
+}
+
+.btn-reg:hover {
+  background: #e65c00;
+}
+
+/* Stil za select element (padajući meni) */
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ced4da; /* Isti okvir kao kod inputa */
+    border-radius: 8px;        /* Zaobljene ivice */
+    background-color: #fff;
+    font-size: 1rem;
+    color: #495057;
+    margin-bottom: 15px;
+    appearance: none;          /* Uklanja default strelicu na nekim browserima */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    /* Dodajemo malu strelicu desno pomoću slike, jer smo je gore uklonili */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 15px;
+}
+
+/* Stil kada se klikne na njega (Focus) */
+select:focus {
+    outline: none;
+    border-color: #ff6600; /* Boja tvog tastera, prilagodi ako treba */
+    box-shadow: 0 0 5px rgba(255, 102, 0, 0.2);
+}
+
+/* Glavna stranica - centriranje sa razmakom od ivica */
+.reg-page {
+    min-height: 100vh; /* Dozvoljava da se rastegne ako zatreba */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #121212;
+    /* Razmak od gornje i donje ivice browsera */
+    padding: 40px 20px; 
+    box-sizing: border-box;
+}
+
+.reg-box {
+    background: #fff;
+    /* Malo manji padding unutar bele kutije da uštedimo prostor */
+    padding: 25px; 
+    border-radius: 12px;
+    width: 100%;
+    max-width: 480px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Logo sekcija - smanjujemo margine da ne gura formu dole */
+.logo-box {
+    background: #ff6600;
+    color: white;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0 auto 5px;
+    border-radius: 4px;
+}
+
+h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0px;
+}
+
+p {
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+}
+
+/* Utegnuta forma */
+.reg-form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px; /* Još manji razmak između polja */
+}
+
+input, .form-select-custom {
+    padding: 8px 12px; /* Tanja polja da bi sve stalo */
+    height: 40px;      /* Fiksna visina za sve */
+}
+
+.btn-reg {
+    padding: 10px;
+    margin-top: 10px;
+}

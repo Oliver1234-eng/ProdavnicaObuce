@@ -1,0 +1,20 @@
+<div class="login-page">
+  <div class="login-box">
+    <div class="logo-box">E</div>
+    <h2>ELEKTRASI OBUĆA</h2>
+    <p>Dobrodošli nazad! Prijavite se na svoj nalog</p>
+
+    <form (ngSubmit)="onLogin()" class="login-form">
+      <input type="text" [(ngModel)]="credentials.username" name="username" placeholder="Korisničko ime" required>
+      
+      <input type="password" [(ngModel)]="credentials.password" name="password" placeholder="Lozinka" required>
+
+      <button type="submit" class="btn-login">PRIJAVI SE</button>
+      
+      <div class="footer-links">
+        <span>Nemaš nalog? </span>
+        <a routerLink="/registracija">Registruj se ovde</a>
+      </div>
+    </form>
+  </div>
+</div>

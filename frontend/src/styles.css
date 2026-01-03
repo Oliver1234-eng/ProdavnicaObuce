@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+/* Stilovi za badge kategorije na karticama da ne brkamo sa badge-om korpe */
+.badge-kategorija {
+    background-color: #333;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+/* Dugme na karticama */
+.btn-dodaj {
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.btn-dodaj:hover {
+    background-color: #e65c00;
+}
