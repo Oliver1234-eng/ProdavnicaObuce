@@ -1,0 +1,16 @@
+.main-header {
+  background-color: #1a1a1a; /* Tamna pozadina kao na slici */
+}
+.text-orange {
+  color: #ff6600;
+}
+.bg-orange {
+  background-color: #ff6600;
+}
+.btn-outline-orange {
+  border-color: #ff6600;
+  color: white;
+}
+.btn-outline-orange:hover {
+  background-color: #ff6600;
+}
